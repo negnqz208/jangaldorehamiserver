@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>جنگل دورهمی | Roblox</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-y;
+    }
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+      overflow-y: visible;
+    }
+    body {
+      font-family: Tahoma, Arial, sans-serif;
+      background: #050a12;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    /* ===== پس‌زمینه ===== */
+    .hero {
+      min-height: 100vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background:
+        linear-gradient(rgba(0, 5, 14, .58), rgba(2, 8, 18, .78)),
+        url("background.png") center/cover fixed;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 50% 35%, rgba(40, 130, 255, .10), transparent 35%),
+        linear-gradient(to bottom, transparent 65%, #050a12 100%);
+      pointer-events: none;
+    }
+
+    /* ذرات متحرک */
+    .particles {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #8bdcff;
+      box-shadow: 0 0 12px #45bfff;
+      opacity: .75;
+      animation: floatUp linear infinite;
+    }
+
+    @keyframes floatUp {
+      from { transform: translateY(110vh) translateX(0); opacity: 0; }
+      15% { opacity: .8; }
+      85% { opacity: .7; }
+      to { transform: translateY(-15vh) translateX(80px); opacity: 0; }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 900px;
+      padding: 30px;
+      animation: fadeIn 1.2s ease both;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 8px 18px;
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 999px;
+      background: rgba(0,0,0,.28);
+      backdrop-filter: blur(10px);
+      color: #b9ddff;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+
+    h1 {
+      font-size: clamp(45px, 8vw, 92px);
+      margin-bottom: 15px;
+      font-weight: 900;
+      background: linear-gradient(90deg,
+        #ff4dff, #5b8cff, #00eaff, #56ff86, #ffe45e, #ff5b8d, #ff4dff);
+      background-size: 400% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: rainbow 7s linear infinite;
+      text-shadow: 0 0 35px rgba(50,160,255,.18);
+    }
+
+    @keyframes rainbow {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 400% 50%; }
+    }
+
+    .subtitle {
+      font-size: clamp(16px, 2.5vw, 22px);
+      color: #d9e7f5;
+      line-height: 2;
+      margin: 0 auto 30px;
+      max-width: 700px;
+    }
+
+    .play-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 230px;
+      padding: 16px 30px;
+      border-radius: 15px;
+      text-decoration: none;
+      font-weight: 900;
+      font-size: 20px;
+      color: transparent;
+      background:
+        linear-gradient(#071a35, #071a35) padding-box,
+        linear-gradient(90deg, #ff4fd8, #5f7cff, #00d9ff, #67ff8c, #ffe45b, #ff4fd8) border-box;
+      border: 2px solid transparent;
+      background-size: 100% 100%, 300% 100%;
+      animation: buttonRainbow 5s linear infinite, pulse 2.2s ease-in-out infinite;
+      box-shadow: 0 0 30px rgba(0, 110, 255, .22);
+      transition: .25s ease;
+    }
+
+    .play-btn span {
+      background: linear-gradient(90deg, #ff5bd7, #6f83ff, #38e8ff, #7dff8e, #ffe45d);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .play-btn:hover {
+      transform: translateY(-4px) scale(1.04);
+      box-shadow: 0 0 45px rgba(30, 140, 255, .42);
+    }
+
+    @keyframes buttonRainbow {
+      to { background-position: 100% 100%, 300% 100%; }
+    }
+
+    @keyframes pulse {
+      50% { box-shadow: 0 0 40px rgba(30, 140, 255, .42); }
+    }
+
+    .scroll {
+      position: absolute;
+      bottom: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      color: #b8cce0;
+      font-size: 13px;
+      animation: bounce 1.8s infinite;
+    }
+
+    .scroll::after {
+      content: "↓";
+      display: block;
+      font-size: 25px;
+      margin-top: 4px;
+    }
+
+    @keyframes bounce {
+      50% { transform: translate(-50%, 8px); }
+    }
+
+    /* ===== بخش سازنده ===== */
+    .creator-section {
+      min-height: 100vh;
+      padding: 110px 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(20, 80, 150, .22), transparent 45%),
+        #050a12;
+      position: relative;
+    }
+
+    .creator-card {
+      width: min(900px, 100%);
+      text-align: center;
+      padding: 55px 30px;
+      border-radius: 28px;
+      background: rgba(8, 19, 34, .72);
+      border: 1px solid rgba(105, 185, 255, .18);
+      box-shadow: 0 25px 80px rgba(0,0,0,.45);
+      backdrop-filter: blur(14px);
+      animation: cardFloat 5s ease-in-out infinite;
+    }
+
+    @keyframes cardFloat {
+      50% { transform: translateY(-8px); }
+    }
+
+    .creator-photo {
+      width: 155px;
+      height: 155px;
+      margin: 0 auto 25px;
+      border-radius: 50%;
+      padding: 4px;
+      background: linear-gradient(135deg, #ff4ed8, #5c83ff, #00eaff, #65ff8b, #ffe55b);
+      background-size: 300% 300%;
+      animation: photoRainbow 5s linear infinite;
+      box-shadow: 0 0 40px rgba(60, 160, 255, .25);
+    }
+
+    .creator-photo img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      background: #0a1424;
+    }
+
+    @keyframes photoRainbow {
+      to { background-position: 300% 300%; }
+    }
+
+    .creator-title {
+      font-size: 15px;
+      color: #8fb7d9;
+      margin-bottom: 10px;
+    }
+
+    .creator-name {
+      font-size: clamp(28px, 5vw, 46px);
+      font-weight: 900;
+      margin-bottom: 18px;
+      background: linear-gradient(90deg, #ff57d8, #6d8cff, #4ce8ff, #78ff91, #ffe55a);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      background-size: 300%;
+      animation: rainbow 6s linear infinite;
+    }
+
+    .creator-text {
+      max-width: 650px;
+      margin: auto;
+      color: #c8d7e8;
+      line-height: 2.1;
+      font-size: 17px;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 30px;
+      color: #9fcfff;
+      text-decoration: none;
+      transition: .2s;
+    }
+    .back-btn:hover { color: #fff; }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: #62758a;
+      background: #03070d;
+      font-size: 13px;
+    }
+
+
+    /* ===== نشانگر موس و ستاره‌های آبی ===== */
+    .cursor-dot,
+    .cursor-ring {
+      position: fixed;
+      left: 0;
+      top: 0;
+      pointer-events: none;
+      z-index: 99999;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      transition: opacity .25s ease;
+    }
+
+    .cursor-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #8ee8ff;
+      box-shadow: 0 0 10px #24bfff, 0 0 22px rgba(36,191,255,.9);
+    }
+
+    .cursor-ring {
+      width: 34px;
+      height: 34px;
+      border: 1px solid rgba(75,205,255,.75);
+      border-radius: 50%;
+      box-shadow: 0 0 16px rgba(35,185,255,.3);
+      transition: width .18s ease, height .18s ease, border-color .18s ease;
+    }
+
+    body.cursor-active,
+    body.cursor-active a,
+    body.cursor-active button {
+      cursor: none;
+    }
+
+    body.cursor-hover .cursor-ring {
+      width: 48px;
+      height: 48px;
+      border-color: rgba(130,235,255,.95);
+      box-shadow: 0 0 28px rgba(30,190,255,.45);
+    }
+
+    .mouse-star {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 5px;
+      height: 5px;
+      pointer-events: none;
+      z-index: 99998;
+      border-radius: 50%;
+      background: #63dfff;
+      box-shadow:
+        0 0 5px #63dfff,
+        0 0 12px #168dff,
+        0 0 22px rgba(22,141,255,.85);
+      transform: translate(-50%, -50%);
+      animation: starFade .85s ease-out forwards;
+    }
+
+    .mouse-star::before,
+    .mouse-star::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 1px;
+      height: 13px;
+      background: linear-gradient(transparent, #9eeeff, transparent);
+      transform: translate(-50%, -50%);
+    }
+
+    .mouse-star::after {
+      transform: translate(-50%, -50%) rotate(90deg);
+    }
+
+    @keyframes starFade {
+      0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(.35) rotate(0deg);
+      }
+      45% {
+        opacity: .95;
+        transform: translate(-50%, -50%) scale(1.15) rotate(45deg);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(.05) rotate(90deg);
+      }
+    }
+
+    @media (pointer: coarse) {
+      .cursor-dot,
+      .cursor-ring,
+      .mouse-star {
+        display: none;
+      }
+
+      body.cursor-active,
+      body.cursor-active a,
+      body.cursor-active button {
+        cursor: auto;
+      }
+    }
+
+    @media (max-width: 600px) {
+      html, body {
+        width: 100%;
+        min-height: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-y;
+      }
+
+      .hero {
+        min-height: 100svh;
+        height: auto;
+        background-attachment: scroll;
+        padding: 70px 16px;
+      }
+
+      .hero-content {
+        width: 100%;
+        padding: 20px 10px 70px;
+      }
+
+      .hero-content h1 {
+        line-height: 1.2;
+      }
+
+      .subtitle {
+        font-size: 16px;
+        line-height: 1.9;
+      }
+
+      .creator-section {
+        min-height: 100svh;
+        padding: 80px 16px;
+      }
+
+      .creator-card {
+        width: 100%;
+        padding: 40px 18px;
+      }
+
+      .creator-photo {
+        width: 135px;
+        height: 135px;
+      }
+
+      .creator-text {
+        font-size: 15px;
+        line-height: 2;
+      }
+
+      .play-btn {
+        width: 100%;
+        max-width: 320px;
+        min-height: 56px;
+        font-size: 18px;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      .scroll {
+        bottom: 14px;
+        font-size: 12px;
+      }
+
+      .particle {
+        animation-duration: 7s;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor-ring" id="cursorRing"></div>
+  <div class="cursor-dot" id="cursorDot"></div>
+
+
+  <section class="hero" id="home">
+    <div class="particles" id="particles"></div>
+
+    <div class="hero-content">
+      <div class="badge">🌲 دنیای جنگل دورهمی</div>
+      <h1>جنگل دورهمی</h1>
+      <p class="subtitle">
+        یک ماجراجویی آرام و دوستانه در دل جنگل؛
+        کنار آتش دورهم جمع شو، با دوستانت بازی کن و لحظه‌های خاص بساز.
+      </p>
+
+      <!-- لینک بازی روبلاکس را اینجا قرار بده -->
+      <a class="play-btn"
+         href="https://www.roblox.com/games/86088279128264/unnamed"
+         target="_blank"
+         rel="noopener">
+        <span>🎮 ورود به بازی</span>
+      </a>
+    </div>
+
+    <div class="scroll">برای دیدن سازنده اسکرول کن</div>
+  </section>
+
+  <section class="creator-section" id="creator">
+    <div class="creator-card">
+      <div class="creator-photo">
+        <!-- عکس خودت را با نام creator.jpg کنار index.html قرار بده -->
+        <img src="creator.jpg"
+             alt="عکس سازنده"
+             onerror="this.src='background.png'">
+      </div>
+
+      <div class="creator-title">سازنده و مدیر پروژه</div>
+      <div class="creator-name">جنگل دورهمی</div>
+
+      <p class="creator-text">
+        این پروژه با هدف ساختن یک فضای دوستانه و سرگرم‌کننده
+        برای دورهمی، بازی و ماجراجویی ساخته شده است.
+        ممنون که از جنگل دورهمی دیدن کردی 💙
+      </p>
+
+      <a class="back-btn" href="#home">↑ برگشت به بالا</a>
+    </div>
+  </section>
+
+  <footer>
+    © 2026 جنگل دورهمی — ساخته شده با ❤️
+  </footer>
+
+  <script>
+    // ساخت ذرات نورانی متحرک روی پس‌زمینه
+    const container = document.getElementById("particles");
+
+    for (let i = 0; i < 55; i++) {
+      const p = document.createElement("span");
+      p.className = "particle";
+      p.style.left = Math.random() * 100 + "%";
+      p.style.animationDuration = (5 + Math.random() * 9) + "s";
+      p.style.animationDelay = (-Math.random() * 12) + "s";
+
+      const size = 2 + Math.random() * 4;
+      p.style.width = size + "px";
+      p.style.height = size + "px";
+
+      container.appendChild(p);
+    }
+  </script>
+</body>
+</html>
